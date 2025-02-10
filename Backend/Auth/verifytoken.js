@@ -15,8 +15,7 @@ const verifyToken = (req,res, next) => {
             console.log(err);
             return res.status(403).send("Could not verify token");
         }
-        req.userId = decoded
-        console.log(decoded)
+        req.user = decoded
     });
     next();
 

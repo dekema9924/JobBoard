@@ -23,6 +23,7 @@ const login=async (req,res)=>{
              res.cookie('token', token, { maxAge: 240000, });//expires in 4min
                      
             res.status(200).json({message: "Login successful"})
+            
     });
 
  
