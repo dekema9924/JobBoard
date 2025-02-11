@@ -64,8 +64,8 @@ function Header() {
               </div>
             </div>
           </div>
-          <button className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize'>Login</button>
-          <button className='hidden md:block cursor-pointer'>Register</button>
+          <Link to={'/login'} className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize text-center'>Login</Link>
+          <Link to={'/register'} className='hidden md:block cursor-pointer'>Register</Link>
           <div onClick={HandleHamburgerMenu} className='md:hidden border-2 border-gray-700 rounded-lg w-12 h-9 flex justify-center flex-col items-center pt-1 cursor-pointer'>
             <span className={isHamburgerClicked ? "hidden transition-all duration-700" : 'w-6 h-2 border-t-2 block transition-all duration-700'}></span>
             <span className={isHamburgerClicked ? "w-6 h-2 border-t-2 block rotate-45 translate-y-[4px] translate-x-[-4px] transition-all duration-700" : 'transition-all duration-700 w-6 h-2 border-t-2 block'}></span>
@@ -76,9 +76,9 @@ function Header() {
       </header>
       {/* Mobile Nav menu */}
       <div className=''>
-        <div style={{ height: isHamburgerClicked ? "210px" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden  '>
+        <div style={{ height: isHamburgerClicked ? "210px" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden z-50  '>
           <div className='flex items-center gap-2 hover:bg-gray-800 rounded-lg p-2'>
-            <Link to={'/'} className='text-sm'>Home</Link>
+            <Link  to={'/'} className='text-sm'>Home</Link>
             <HomeIcon />
           </div>
           <hr className=' text-gray-500 my-2 ' />
@@ -89,17 +89,17 @@ function Header() {
             </div>
           </div>
           <div className='flex items-center my-2  hover:bg-gray-800 rounded-lg h-10 p-2'>
-            <p onClick={() => setHamburgerClicked(false)} className='text-sm'>Login</p>
+            <Link to={'/login'} onClick={() => setHamburgerClicked(false)} className='text-sm'>Login</Link>
             <PersonIcon className='p-1' />
           </div>
           <div className='flex items-center  hover:bg-gray-800 rounded-lg h-10 p-2'>
-            <p onClick={() => setHamburgerClicked(false)} className='text-sm'>Sign Up</p>
+            <Link to={'/register'} onClick={() => setHamburgerClicked(false)} className='text-sm'>Sign Up</Link>
             <PersonAddAltIcon className='p-1' />
           </div>
         </div>
         {/* jopPosting dropdown */}
         <div className='md:hidden '>
-          <div style={{ display: isJobDropdown ? "block" : "none", }} className=' absolute left-28 bottom-66 text-sm p-2 border-2 border-gray-700 w-42 bg-black'>
+          <div style={{ display: isJobDropdown ? "block" : "none", }} className=' absolute left-28 bottom-66 text-sm p-2 border-2 border-gray-700 w-42 bg-black z-50'>
             <Link to={'/postings'} onClick={() => setJobDropdown(false)} className='py-2 hover:bg-gray-800 rounded-lg h-10 p-2'>Browse Jobs</Link>
             <hr className=' text-gray-500 my-2 ' />
             <p onClick={() => setJobDropdown(false)} className='hover:bg-gray-800 rounded-lg h-10 p-2 '>Internship</p>

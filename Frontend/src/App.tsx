@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import JobPost from './components/JobPost'
 import JobInfo from './components/JobInfo'
+import Login from './components/Login'
+import Register from './components/Register'
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/postings' element={<JobPost />} />
           <Route path='/postings/:id' element={<JobInfo/>} />
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
         </Routes>
       </div>
     </>
