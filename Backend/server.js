@@ -8,8 +8,13 @@ require('dotenv').config()
 const passportSetup = require('./Auth/githubauth');
 const passport = require('passport')
 var session = require('express-session');
+const cors = require('cors')
 
 
+app.use(cors({
+    origin: 'http://localhost:5173',  // Allow only this origin
+    credentials: true                // Allow sending credentials like cookies
+  }));
 
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, maxAge: 60000, saveUninitialized: false, cookie: ({secure: true}) }));
 app.use(passport.initialize());

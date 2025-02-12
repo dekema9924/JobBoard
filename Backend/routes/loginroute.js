@@ -27,9 +27,10 @@ loginroute.get('/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.send(req.user)
-    //   res.redirect('/api/jobs');
-    });
+      // console.log('User authenticated:', req.user);
+      res.status(200).json({message: 'login success', user: req.user})
+
+});
 
 
 module.exports = loginroute

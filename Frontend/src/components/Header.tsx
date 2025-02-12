@@ -9,10 +9,17 @@ function Header() {
   const [isHamburgerClicked, setHamburgerClicked] = useState(false)
   const [isJobDropdown, setJobDropdown] = useState(false)
   const [isLgscreenDropdown, setLgScreenDropdown] = useState(false)
+  const [isProfileClicked, setProfileClicked] = useState(false)
 
   const HandleHamburgerMenu = () => {
     setHamburgerClicked(prevState => !prevState)
     setJobDropdown(false)
+    setProfileClicked(false)
+  }
+
+  const HandleProfileDropDown=()=>{
+    setProfileClicked(!isProfileClicked)
+    setHamburgerClicked(false)
   }
 
   const HandleJobDropDown = () => {
@@ -64,8 +71,23 @@ function Header() {
               </div>
             </div>
           </div>
-          <Link to={'/login'} className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize text-center'>Login</Link>
-          <Link to={'/register'} className='hidden md:block cursor-pointer'>Register</Link>
+          {/* <Link to={'/login'} className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize text-center'>Login</Link> */}
+          <Link className='text-sm hidden md:block' to={'/dashboard'}>DashBoard</Link>
+          {/* <Link to={'/register'} className='hidden md:block cursor-pointer'>Register</Link> */}
+          <p className='hidden md:block'>Profile</p>
+
+          {/* login profile dropdown */}
+          <div className='border-2 relative w-8 h-8 rounded-md pt-[.90px] text-center md:hidden cursor-pointer'>
+            <p onClick={HandleProfileDropDown} className='font-bold'>T</p>
+            <div style={{height: isProfileClicked ? "180px" : "0px", padding: isProfileClicked ? "3px" : "0px", border: isProfileClicked ? " " : "1px"}} className='border-2 md:hidden transition-all duration-500 overflow-hidden border-gray-600 w-42 p-3 h-34 absolute right-0 top-10 bg-black flex flex-col gap-2 '>
+              <hr className='text-gray-700 my-2' />
+                <Link to={'/profile'}>Profile</Link>
+                <Link to={'/savedjobs'}>My jobs</Link>
+                <Link className=' md:hidden' to={'/dashboard'}>Dashboard</Link>
+                <hr className='text-gray-700' />
+                <button>LogOut</button>
+            </div>
+          </div>
           <div onClick={HandleHamburgerMenu} className='md:hidden border-2 border-gray-700 rounded-lg w-12 h-9 flex justify-center flex-col items-center pt-1 cursor-pointer'>
             <span className={isHamburgerClicked ? "hidden transition-all duration-700" : 'w-6 h-2 border-t-2 block transition-all duration-700'}></span>
             <span className={isHamburgerClicked ? "w-6 h-2 border-t-2 block rotate-45 translate-y-[4px] translate-x-[-4px] transition-all duration-700" : 'transition-all duration-700 w-6 h-2 border-t-2 block'}></span>
@@ -76,7 +98,7 @@ function Header() {
       </header>
       {/* Mobile Nav menu */}
       <div className=''>
-        <div style={{ height: isHamburgerClicked ? "210px" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden z-50  '>
+        <div style={{ height: isHamburgerClicked ? "210px" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px" ,padding: isHamburgerClicked ? "2px" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden z-50  '>
           <div className='flex items-center gap-2 hover:bg-gray-800 rounded-lg p-2'>
             <Link  to={'/'} className='text-sm'>Home</Link>
             <HomeIcon />

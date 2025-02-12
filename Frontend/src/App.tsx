@@ -6,10 +6,15 @@ import JobPost from './components/JobPost'
 import JobInfo from './components/JobInfo'
 import Login from './components/Login'
 import Register from './components/Register'
+import  { Toaster } from 'react-hot-toast';
+import Dashboard from './components/Dashboard'
+import Profile from './components/Profile'
+
 
 function App() {
   return (
     <>
+    <Toaster/>
       <Header />
       <div className=' w-11/12 m-auto my-8'>
         <Routes>
@@ -18,6 +23,8 @@ function App() {
           <Route path='/postings/:id' element={<JobInfo/>} />
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Routes>
       </div>
     </>

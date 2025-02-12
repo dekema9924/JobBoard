@@ -12,7 +12,6 @@ const verifyToken = (req,res, next) => {
 
     jwt.verify(token, process.env.JwtSecret, function(err, decoded) {
         if (err) {
-            console.log(err);
             return res.status(403).send("Could not verify token");
         }
         req.user = decoded

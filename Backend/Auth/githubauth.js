@@ -1,6 +1,7 @@
 
 var GitHubStrategy = require('passport-github2').Strategy;
 const passport = require('passport')
+const userdb = require('../models/usersmodel')
 
 passport.serializeUser((user, done)=>{
     done(null, user.id)
@@ -17,6 +18,7 @@ passport.use(new GitHubStrategy({
 },
     function (accessToken, refreshToken, profile, done) {
         return done(null, profile);
+        
     }
 ));
 
