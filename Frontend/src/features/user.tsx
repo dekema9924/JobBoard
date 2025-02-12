@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
  type initialStateType  = {
     username: string
-    Token: string
+    Token: null | string
 }
 const initialState: initialStateType = {
     username: "",
-    Token: ""
+    Token: null
 }
 
 export const userSlice = createSlice({

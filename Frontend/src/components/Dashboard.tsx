@@ -8,8 +8,9 @@ function Dashboard() {
   return (
     <>  
       <div>
-        <p>Dashboard</p>
-          <p className='border-2 h-6'>{user.username}</p>
+        <p className='text-4xl  font-bold'>Dashboard</p>
+          {/* <p className='border-2 h-6'>{user.username}</p> */}
+          <p>Currently Under Construction</p>
       </div>
     </>
   )

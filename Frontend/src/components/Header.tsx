@@ -4,12 +4,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import PersonIcon from '@mui/icons-material/Person';
+import { useSelector } from 'react-redux';
 
 function Header() {
   const [isHamburgerClicked, setHamburgerClicked] = useState(false)
   const [isJobDropdown, setJobDropdown] = useState(false)
   const [isLgscreenDropdown, setLgScreenDropdown] = useState(false)
   const [isProfileClicked, setProfileClicked] = useState(false)
+  const user = useSelector((state: any) => state.user.value)
 
   const HandleHamburgerMenu = () => {
     setHamburgerClicked(prevState => !prevState)
@@ -17,7 +19,7 @@ function Header() {
     setProfileClicked(false)
   }
 
-  const HandleProfileDropDown=()=>{
+  const HandleProfileDropDown = () => {
     setProfileClicked(!isProfileClicked)
     setHamburgerClicked(false)
   }
@@ -38,7 +40,7 @@ function Header() {
         </div>
         <div className=' flex gap-6 mr-6 items-center'>
           <div className='hidden md:flex gap-4 items-center'>
-              <Link to={'/'} className='text-sm cursor-pointer'>Home</Link>
+            <Link to={'/'} className='text-sm cursor-pointer'>Home</Link>
             <div>
               <div onClick={HandleLgScreenDropdown} className='flex items-center cursor-pointer '>
                 <p className='text-sm'>Job Postings</p>
@@ -46,24 +48,24 @@ function Header() {
               </div>
 
               {/* lg screen dropdown  */}
-              <div style={{height: isLgscreenDropdown ? "260px" : "0px", padding: isLgscreenDropdown ? "10px" : "0px", border: isLgscreenDropdown ? "1px solid #364153"  : "0px"}} className='border-2 cursor-default overflow-x-hidden border-gray-700 p-4 w-[470px]  absolute top-20 right-0 flex flex-wrap gap-1 transition-all bg-black duration-700 '>
-                <div onClick={()=>setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-lg'>
+              <div style={{ height: isLgscreenDropdown ? "260px" : "0px", padding: isLgscreenDropdown ? "10px" : "0px", border: isLgscreenDropdown ? "1px solid #364153" : "0px" }} className='border-2 cursor-default overflow-x-hidden border-gray-700 p-4 w-[470px]  absolute top-20 right-0 flex flex-wrap gap-1 transition-all bg-black duration-700 '>
+                <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-lg'>
                   <Link to={'/postings'} className='capitalize w-11/12 '>All Job Posting</Link>
                   <p className='text-gray-400 text-sm'>Browse all Job postings</p>
                 </div>
-                <div onClick={()=>setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
+                <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
                   <p className='capitalize w-11/12 '>Internships</p>
                   <p className='text-gray-400 text-sm'>Browse Internship Opportunities</p>
                 </div>
-                <div onClick={()=>setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
+                <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
                   <p className='capitalize w-11/12 '>Software Engineer </p>
                   <p className='text-gray-400 text-sm'>Browse Sofware Engineer roles at different levels</p>
                 </div>
-                <div onClick={()=>setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
+                <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
                   <p className='capitalize w-11/12 '>CyberSecurity</p>
                   <p className='text-gray-400 text-sm'>Explore CyberSecurity roles</p>
                 </div>
-                <div onClick={()=>setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
+                <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-l'>
                   <p className='capitalize w-11/12 '>Entry Level</p>
                   <p className='text-gray-400 text-sm'>No experience? No problem.</p>
                 </div>
@@ -71,23 +73,33 @@ function Header() {
               </div>
             </div>
           </div>
-          {/* <Link to={'/login'} className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize text-center'>Login</Link> */}
-          <Link className='text-sm hidden md:block' to={'/dashboard'}>DashBoard</Link>
-          {/* <Link to={'/register'} className='hidden md:block cursor-pointer'>Register</Link> */}
-          <p className='hidden md:block'>Profile</p>
+          {
+            !user.Token ? <Link to={'/login'} className='cursor-pointer bg-purple-800 w-20 text-sm uppercase rounded-lg border-2 border-purple-400 text-purple-200 md:border-gray-700 md:bg-transparent md:text-white md:capitalize text-center'>Login</Link>
+              : ""
+          }
+          {
+            user.Token ? <div className='flex gap-4 items-center '>
+              <Link className='text-sm hidden md:block' to={'/dashboard'}>DashBoard</Link>
+              <Link className='text-sm hidden md:block' to={'/profile'}>Profile</Link>
+              <Link className='text-sm hidden md:block' to={'/savedjobs'}>My jobs</Link>
+            </div> : ""
+          }
 
           {/* login profile dropdown */}
-          <div className='border-2 relative w-8 h-8 rounded-md pt-[.90px] text-center md:hidden cursor-pointer'>
-            <p onClick={HandleProfileDropDown} className='font-bold'>T</p>
-            <div style={{height: isProfileClicked ? "180px" : "0px", padding: isProfileClicked ? "3px" : "0px", border: isProfileClicked ? " " : "1px"}} className='border-2 md:hidden transition-all duration-500 overflow-hidden border-gray-600 w-42 p-3 h-34 absolute right-0 top-10 bg-black flex flex-col gap-2 '>
-              <hr className='text-gray-700 my-2' />
+          {user.Token ?
+            <div className='border-2 relative w-8 h-8 rounded-md pt-[.90px] text-center md:hidden cursor-pointer'>
+              <p style={{ display: user.Token != null ? "block" : "hidden" }} onClick={HandleProfileDropDown} className='font-bold uppercase'>{user.username.slice(0, 1)}</p>
+
+              <div style={{ height: isProfileClicked ? "180px" : "0px", padding: isProfileClicked ? "3px" : "0px", border: isProfileClicked ? " " : "1px" }} className='border-2 md:hidden transition-all duration-500 overflow-hidden border-gray-600 w-42 p-3 h-34 absolute right-0 top-10 bg-black flex flex-col gap-2 '>
+                <hr className='text-gray-700 my-2' />
                 <Link to={'/profile'}>Profile</Link>
                 <Link to={'/savedjobs'}>My jobs</Link>
                 <Link className=' md:hidden' to={'/dashboard'}>Dashboard</Link>
                 <hr className='text-gray-700' />
                 <button>LogOut</button>
+              </div>
             </div>
-          </div>
+            : ""}
           <div onClick={HandleHamburgerMenu} className='md:hidden border-2 border-gray-700 rounded-lg w-12 h-9 flex justify-center flex-col items-center pt-1 cursor-pointer'>
             <span className={isHamburgerClicked ? "hidden transition-all duration-700" : 'w-6 h-2 border-t-2 block transition-all duration-700'}></span>
             <span className={isHamburgerClicked ? "w-6 h-2 border-t-2 block rotate-45 translate-y-[4px] translate-x-[-4px] transition-all duration-700" : 'transition-all duration-700 w-6 h-2 border-t-2 block'}></span>
@@ -98,9 +110,9 @@ function Header() {
       </header>
       {/* Mobile Nav menu */}
       <div className=''>
-        <div style={{ height: isHamburgerClicked ? "210px" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px" ,padding: isHamburgerClicked ? "2px" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden z-50  '>
+        <div style={{ height: isHamburgerClicked ? "fit-content" : "0px", border: isHamburgerClicked ? "2px solid #364153" : "0px", padding: isHamburgerClicked ? "2px" : "0px" }} className='md:hidden w-50 transition-all duration-500  border-2 bg-black border-gray-700 absolute right-6 flex flex-col p-2 rounded-lg overflow-hidden z-50  '>
           <div className='flex items-center gap-2 hover:bg-gray-800 rounded-lg p-2'>
-            <Link  to={'/'} className='text-sm'>Home</Link>
+            <Link to={'/'} className='text-sm'>Home</Link>
             <HomeIcon />
           </div>
           <hr className=' text-gray-500 my-2 ' />
@@ -110,14 +122,16 @@ function Header() {
               <KeyboardArrowDownIcon className={isJobDropdown ? '' : '-rotate-90 '} />
             </div>
           </div>
-          <div className='flex items-center my-2  hover:bg-gray-800 rounded-lg h-10 p-2'>
+          {!user.Token ? <div className='flex items-center my-2  hover:bg-gray-800 rounded-lg h-10 p-2'>
             <Link to={'/login'} onClick={() => setHamburgerClicked(false)} className='text-sm'>Login</Link>
             <PersonIcon className='p-1' />
-          </div>
-          <div className='flex items-center  hover:bg-gray-800 rounded-lg h-10 p-2'>
-            <Link to={'/register'} onClick={() => setHamburgerClicked(false)} className='text-sm'>Sign Up</Link>
-            <PersonAddAltIcon className='p-1' />
-          </div>
+          </div> : ""}
+          {
+            !user.Token ? <div className='flex items-center  hover:bg-gray-800 rounded-lg h-10 p-2'>
+              <Link to={'/register'} onClick={() => setHamburgerClicked(false)} className='text-sm'>Sign Up</Link>
+              <PersonAddAltIcon className='p-1' />
+            </div> : ""
+          }
         </div>
         {/* jopPosting dropdown */}
         <div className='md:hidden '>
