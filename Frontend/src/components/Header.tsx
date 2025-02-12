@@ -5,6 +5,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 
 function Header() {
   const [isHamburgerClicked, setHamburgerClicked] = useState(false)
@@ -12,11 +15,18 @@ function Header() {
   const [isLgscreenDropdown, setLgScreenDropdown] = useState(false)
   const [isProfileClicked, setProfileClicked] = useState(false)
   const user = useSelector((state: any) => state.user.value)
+  const navigate = useNavigate()
 
   const HandleHamburgerMenu = () => {
     setHamburgerClicked(prevState => !prevState)
     setJobDropdown(false)
     setProfileClicked(false)
+  }
+  const HandleLogOut=()=>{
+     Cookies.remove('token')
+     window.location.reload();
+
+     
   }
 
   const HandleProfileDropDown = () => {
@@ -81,7 +91,8 @@ function Header() {
             user.Token ? <div className='flex gap-4 items-center '>
               <Link className='text-sm hidden md:block' to={'/dashboard'}>DashBoard</Link>
               <Link className='text-sm hidden md:block' to={'/profile'}>Profile</Link>
-              <Link className='text-sm hidden md:block' to={'/savedjobs'}>My jobs</Link>
+              <Link className='text-sm hidden md:block' to={'/saved'}>My jobs</Link>
+              <button onClick={HandleLogOut} className='text-red-800 hover:bg-gray-800 cursor-pointer uppercase text-sm font-bold hidden md:block' >LogOut</button>
             </div> : ""
           }
 
@@ -93,10 +104,10 @@ function Header() {
               <div style={{ height: isProfileClicked ? "180px" : "0px", padding: isProfileClicked ? "3px" : "0px", border: isProfileClicked ? " " : "1px" }} className='border-2 md:hidden transition-all duration-500 overflow-hidden border-gray-600 w-42 p-3 h-34 absolute right-0 top-10 bg-black flex flex-col gap-2 '>
                 <hr className='text-gray-700 my-2' />
                 <Link to={'/profile'}>Profile</Link>
-                <Link to={'/savedjobs'}>My jobs</Link>
+                <Link to={'/saved'}>My jobs</Link>
                 <Link className=' md:hidden' to={'/dashboard'}>Dashboard</Link>
                 <hr className='text-gray-700' />
-                <button>LogOut</button>
+                <button onClick={HandleLogOut} className='text-red-400 hover:bg-gray-800 cursor-pointer border-2 border-gray-700 uppercase text-sm' >LogOut</button>
               </div>
             </div>
             : ""}

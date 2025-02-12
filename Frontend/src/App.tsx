@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import Dashboard from './components/Dashboard'
 import Profile from './components/Profile'
 import { AuthRoute } from './Auth/ProtectiveRoutes'
+import SavedJobs from './components/SavedJobs'
 
 
 function App() {
@@ -24,11 +25,12 @@ function App() {
           <Route path='/postings/:id' element={<JobInfo />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          {/* <Route path='/dashboard' element={<Dashboard/>}/>
-          <Route path='/profile' element={<Profile/>}/> */}
+
+          {/* //User ProtectiveRoutes */}
           <Route element={<AuthRoute />}>
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/saved' element={<SavedJobs/>}/>
           </Route>
         </Routes>
       </div>
