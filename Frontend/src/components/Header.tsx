@@ -58,7 +58,7 @@ function Header() {
               </div>
 
               {/* lg screen dropdown  */}
-              <div style={{ height: isLgscreenDropdown ? "260px" : "0px", padding: isLgscreenDropdown ? "10px" : "0px", border: isLgscreenDropdown ? "1px solid #364153" : "0px" }} className='border-2 cursor-default overflow-x-hidden border-gray-700 p-4 w-[470px]  absolute top-20 right-0 flex flex-wrap gap-1 transition-all bg-black duration-700 '>
+              <div style={{ height: isLgscreenDropdown ? "260px" : "0px", padding: isLgscreenDropdown ? "10px" : "0px", border: isLgscreenDropdown ? "1px solid #364153" : "0px" }} className='border-2 cursor-default overflow-x-hidden border-gray-700 p-4 w-[470px]  absolute top-20 right-0 flex flex-wrap gap-1 transition-all bg-black duration-700 z-50 '>
                 <div onClick={() => setLgScreenDropdown(false)} className=' w-5/11 p-2  hover:bg-gray-800 rounded-lg'>
                   <Link to={'/postings'} className='capitalize w-11/12 '>All Job Posting</Link>
                   <p className='text-gray-400 text-sm'>Browse all Job postings</p>

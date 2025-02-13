@@ -2,39 +2,39 @@ import { Search } from '@mui/icons-material'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function JobPost() {
+  interface jobType {
+    job_id: number
+    employer_name: string
+    job_title: string
+    job_location: string
+    job_salary: number
+    job_posted_at: string
+    employer_logo: string
+  }
 
-  const initialState = [
-    {
-      company: "transamerica",
-      job_title: "information technology intern",
-      salary: "$21-$24",
-      job_location: "Townson, MD, united States",
-      date_posted: "4 days ago",
-      id: 1
 
-    },
-    {
-      company: "transamerica",
-      job_title: "information technology intern",
-      salary: "$21-$24",
-      job_location: "Townson, MD, united States",
-      date_posted: "4 days ago",
-      id:2
-    }
-    
-  ]
-  const [jobsData, setJobsData] = useState(initialState)
+  const [jobsData, setJobsData] = useState<jobType[]>([])
+  const [isFetching, setFetching] = useState(true)
+
+  useEffect(() => {
+    axios.defaults.baseURL = 'http://localhost:3000/api'
+    axios.get('/alljobs').then((response) => {
+      setJobsData(response.data.data)
+      setFetching(false)
+    })
+  }, [])
 
 
   return (
     <>
       <div>
         <p className='font-bold text-2xl w-fit '>Search Results</p>
-        <span className='text-sm text-purple-400'>1200 results</span>
+        <span className='text-sm text-purple-400'>{jobsData.length} results</span>
         <form className='' action="">
           <div className='relative flex items-center w-11/12 m-auto mt-7'>
             <input className='border-2 w-11/12 border-gray-600 outline-none h-13 rounded-xl pl-14 font-thin' type="text" name='job-title' placeholder='job title' />
@@ -48,30 +48,31 @@ function JobPost() {
 
         <div className='my-10 flex flex-col gap-10 ml-4 md:ml-14'>
           {
-            jobsData.map((data) => {
-              return (
-                <Link to={'/postings/id'} key={data.id} className='flex gap-4 w-96 '>
-                  <img className='w-12 h-12 rounded-full object-center object-cover' src="https://placehold.co/400" alt="job-logo" />
-                  <div className=''>
-                    <p className='text-purple-400'>{data.company}</p>
-                    <p className='text-2xl font-semibold w-80 capitalize'>{data.job_title}</p>
-                    <div className='flex items-center w-20'>
-                      <AttachMoneyIcon className='text-gray-400 p-1' />
-                      <p className='font-thin'>{data.salary}</p>
+            !isFetching ?
+              jobsData.map((data) => {
+                return (
+                  <Link to={`/postings/${data.job_id}`} key={data.job_id} className='flex gap-4 w-96 '>
+                    <img className='w-12 h-12 rounded-full object-center object-cover' src={data.employer_logo === null ? "https://placehold.co/400" : data.employer_logo} alt="job-logo" />
+                    <div className=''>
+                      <p className='text-purple-400'>{data.employer_name}</p>
+                      <p className='text-2xl font-semibold w-80 capitalize'>{data.job_title}</p>
+                      <div className='flex items-center w-20'>
+                        <AttachMoneyIcon className='text-gray-400 p-1' />
+                        <p className='font-thin'>{data?.job_salary}</p>
+                      </div>
+                      <div className='flex items-center'>
+                        <LocationOnIcon className='text-gray-400 p-1' />
+                        <p className='font-thin capitalize'>{data.job_location}</p>
+                      </div>
+                      <div className='flex items-center '>
+                        <QueryBuilderIcon className='text-gray-400 p-1' />
+                        <p className='font-thin'>posted <span>{data.job_posted_at}</span></p>
+                      </div>
                     </div>
-                    <div className='flex items-center'>
-                      <LocationOnIcon className='text-gray-400 p-1' />
-                      <p className='font-thin capitalize'>{data.job_location}</p>
-                    </div>
-                    <div className='flex items-center '>
-                      <QueryBuilderIcon className='text-gray-400 p-1' />
-                      <p className='font-thin'>posted <span>{data.date_posted}</span></p>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })
-
+                  </Link>
+                )
+              })
+              : "...loading"
           }
         </div>
       </div>
